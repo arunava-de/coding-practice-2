@@ -1,3 +1,4 @@
+
 def sum_span(l, r, A):
 
     s = 0
@@ -6,7 +7,7 @@ def sum_span(l, r, A):
     return s
 
 def solve(A, B):
-
+# Not optimal
     n = len(A)
     left = B-1
     right = n
