@@ -38,7 +38,7 @@ def justify(words, k):
             i += 1
             continue
 
-        if len(temp)+len(words[i])>k:
+        if len(temp)+len(words[i])+1>k:
             # If temp already has enough characters, we just fill the rest up with spaces and go to next line
             temp = fill_with_space(temp, k, False)
             output.append(temp)
@@ -48,6 +48,7 @@ def justify(words, k):
             # Current line has enough characters left, we move to next word
             temp += " " + words[i]
             i += 1
+
     output.append(fill_with_space(temp, k, True))
 
     return(output)
