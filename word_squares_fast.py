@@ -40,3 +40,4 @@ print(word_squares(words))
 words = ["abat","baba","atan","atal"]
 print(word_squares(words))
 
+
