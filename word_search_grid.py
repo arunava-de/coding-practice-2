@@ -109,6 +109,7 @@ def word_search(board, words):
         for j in range(n):
             if t.startsWith(board[i][j]):
                 recur(i, j, board[i][j], t)
+                
     
     return results 
 
