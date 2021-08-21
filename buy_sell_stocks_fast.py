@@ -5,18 +5,17 @@ def max_profit(prices):
     if n==1:
         return 0
 
-    mins = [0]*n 
-    mins[0] = prices[0]
+    # mins = [0]*n 
+    min_till_now = prices[0]
     maxprof = 0 
 
     for i in range(1,n):
 
-        if prices[i]<mins[i-1]: # Here we don't sell, but update the min till now
-            mins[i] = prices[i]
+        if prices[i]<min_till_now: # Here we don't sell, but update the min till now
+            min_till_now = prices[i]
         else: # There's a possibility of selling
-            mins[i] = mins[i-1]
-            if prices[i] - mins[i]>maxprof:
-                maxprof = prices[i] - mins[i]
+            if prices[i] - min_till_now>maxprof:
+                maxprof = prices[i] - min_till_now
     
     return maxprof
 
