@@ -32,7 +32,7 @@ class SegTree:
             mid = (s+e)//2
 
             self.update_value(diff, i, s, mid, 2*si+1)
-            self.update_value(diff, i, s, mid, 2*si+2)
+            self.update_value(diff, i, mid+1, e, 2*si+2)
 
     def get_sum(self, s, e, qs, qe, i):
 
