@@ -5,7 +5,7 @@ def num_jewels_in_stones(jewels, stones):
 
     for s in stones:
         # if s in jset:
-        if j in jewels:
+        if s in jewels:
             c += 1
 
     return c
