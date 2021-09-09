@@ -38,18 +38,18 @@ class AutocompleteSystem:
         self.search_engine = Trie()
         self.pfx = ""
         self.start = self.search_engine.root
+        self.valid = -1
 
         for i in range(len(sentences)):
             self.search_engine.insert(sentences[i], times[i])
 
     def DFS(self, u, results, curr_pfx):
+            
+        if u==None:
+            return
 
         if u.isEndOfWord:
             results.append((curr_pfx, u.timesOccur))
-            return
-
-        if u==None:
-            return 
 
         for i in range(27):
             if u.children[i]:
@@ -58,8 +58,6 @@ class AutocompleteSystem:
                 else:
                     char = chr(i+ord('a'))
                 self.DFS(u.children[i], results, curr_pfx + char)
-
-        return
 
     def get_results(self, c):
         
@@ -70,49 +68,72 @@ class AutocompleteSystem:
                 self.search_engine.insert(self.pfx, 1)
             self.start = self.search_engine.root
             self.pfx = ""
+            self.valid = -1
             return []
 
         self.pfx += c
-        # start, endOfWord = self.search_engine.search(self.pfx)
-
         curr = self.start
         idx = self.search_engine.char_to_idx(c)
 
-        if not curr.children[idx]:
+        if self.valid==0:
             return []
 
+        if not curr.children[idx]: # We ensure that till # comes, we keep on giving []
+            self.valid = 0 
+            return []
+        else:
+            self.valid = 1
         self.start = curr.children[idx]
 
-        if curr.isEndOfWord:
-            return [self.pfx]
+        # if curr.isEndOfWord:
+        #     return [self.pfx]
 
         results = []
 
         self.DFS(self.start, results, self.pfx)
-
         results.sort(key=lambda x: (-x[1],x[0]))
 
         return results[:3]
-
-
-sentences = ["i love you", "island", "ironman", "i love leetcode"]
-times = [5, 3, 2, 2]
-
-acs = AutocompleteSystem(sentences, times)
-
-acs.get_results("i")
-acs.get_results(" ")
-acs.get_results("a")
-acs.get_results("#")
 
 sentences = ["abc", "abbc", "a"]
 times = [3,3,3]
 acs = AutocompleteSystem(sentences, times)
 
-acs.get_results("b")
-acs.get_results("c")
-acs.get_results("#")
-acs.get_results("b")
-acs.get_results("c")
-acs.get_results("#")
-acs.get_results("a")
+# acs.get_results("b")
+# acs.get_results("c")
+# acs.get_results("#")
+# acs.get_results("b")
+# acs.get_results("c")
+# acs.get_results("#")
+# acs.get_results("a")
+# acs.get_results("b")
+# acs.get_results("c")
+# acs.get_results("#")
+# acs.get_results("a")
+# acs.get_results("b")
+# acs.get_results("c")
+# acs.get_results("#")
+
+# acs.pfx += "a"
+# curr = acs.start 
+# idx = acs.search_engine.char_to_idx("a")
+# start = curr.children[idx]
+# results = []
+
+# def DFS(u, results, curr_pfx):
+        
+#     if u==None:
+#         return
+
+#     if u.isEndOfWord:
+#         results.append((curr_pfx, u.timesOccur))
+
+#     for i in range(27):
+#         if u.children[i]:
+#             if i==26:
+#                 char = ' '
+#             else:
+#                 char = chr(i+ord('a'))
+#             DFS(u.children[i], results, curr_pfx + char)
+
+# DFS(start, results, acs.pfx)
